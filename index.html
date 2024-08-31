@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+</head>
+<body>
+    <div class="container">
+    <h1>Attribution Parrains et Filleuls</h1>
+    <form id="uploadForm">
+        <label for="fileParrain">Le fichier des parrains</label>
+        <input type="file" id="fileParrains"  accept=".csv, .Xlsx" required>
+
+        <label for="fileFilleuls">Le fichier des Filleuls:</label>
+        <input type="file" id="fileFilleuls" accept=".csv, .xlsv" required>
+
+        <button type="submit">Générer le fichier</button>
+    </form>
+    <div id="result"></div>
+    </div>
+</body>
+</html>
+
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function (event) {
+        event.preventDefault(); //empêche le rechragement de la page
+
+        const fileParrains = document.getElementById('fileParrains').files[0];
+        const fileFilleuls = document.getElementById('fileFilleuls').file[0];
+
+        if(!fileParrains || !fileFilleuls){
+            alert('Veuillez uploader les deux fichiers');
+            return;
+        } 
+// je crois qu'ici, on doit ajouter la logique qui nous permettra de traiter les fichier et générer le fichier de sortie
+        document.getElementById('result');
+        resultDiv.innerHTML = `<p> Fichier des parrains: ${fileParrains.name}</p>
+        <p>Fichier des filleuls: ${fileFilleuls.name}</p>
+        <p> Génération du ficier en cours...</p>`;
+
+    });
+    // traduction du code python en js
+    function attribuerParrains(nouvelEtudiant, filiere) { 
+        if(!(filiere in filieres)){
+            console.log(`Erreur: La filière '${filiere}' n\existe pas. `);
+            return null;
+        }
+        const parrainMemeFiliere = randomChoice(filieres[filiere], nouvelleEtudiant);
+        const autresEtudiants = Object.keys(filieres).reduce(acc,f)
+    }
+</script>
