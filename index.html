@@ -18,7 +18,7 @@
         <label for="fileFilleuls">Le fichier des Filleuls:</label>
         <input type="file" id="fileFilleuls" accept=".csv, .xlsv" required class="input-group">
 
-        <button type="submit">Générer le fichier</button>
+        <button id="generate" type="submit">Générer le fichier</button>
     </form>
     <div id="result"></div>
     </div>
@@ -26,10 +26,26 @@
 </html>
 
 <script>
+    document.getElementById('generate').addEventListener('click', function(){
+        const fileParrainsInput = document.getElementById('fileParrains');
+        const fileFilleulsInput = document.getElementById('fileFilleuls');
+        if(fileParrainsInput.files.length === 0 || fileFilleulsInput.files.length === 0){
+            alert('Veuillez sélectionner les fichiers des parrains et des filleuls.');
+            return;
+        }
+        const fileParrains = fileParrainsInput.file[0]; // Utiliser le premier fichier
+        console.log('Fichier parrains:', fileParrains.name);
+        console.log('Fichier filleuls:', fileFilleuls.name)
+    })
     document.getElementById('uploadForm').addEventListener('submit', function (event) {
         event.preventDefault(); //Empêche le rechragement de la page
 
         const fileParrains = document.getElementById('fileParrains').files[0];
+        if(fileParrains.file.length > 0){
+            console.log(fileParrainsInput.files[0].name)
+        }else{
+            console.log('Aucun fichier sélectionné.')
+        }
         const fileFilleuls = document.getElementById('fileFilleuls').files[0];
 
         if(!fileParrains || !fileFilleuls){
@@ -58,8 +74,8 @@
             const reader = new FileReader();
             reader.onload = (even) => {
                 const data = event.target.result;
-                const workbook = XLSX.read(data, { tpye: 'binary'});
-                const firstSheetName = workbook.firstSheetName[0];
+                const workbook = XLSX.read(data, { type: 'binary'});
+                const firstSheetName = workbook.SheetName[0];
                 const worksheet = workbook.Sheets[firstSheetName];
                 const jsonData = XLSX.utils.sheet_to_json(worksheet);
                 resolve(jsonData);
@@ -79,6 +95,16 @@
     function randomChoice(array) {
         const randomIndex = Math.floor(Math.random() * array.length);
         return array[randomIndex];
+    }
+    function downloadOutput(outputData) {
+        const worksheet = XLSX.utils.json_to_sheet(outputData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Attribution')
+        // Création du fichier a telecharger
+        XLSX.writeFile(workbook, 'attribution_parrains_filleuls.xlsx');
+        // Afficher un message de succès
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML += `<p> Fichier généré avec succès.</p>`;
     }
     // traduction du code python en js
     function attribuerParrains(nouvelEtudiant, filiere) { 
