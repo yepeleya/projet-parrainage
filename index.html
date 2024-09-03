@@ -96,7 +96,7 @@
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'output.txt';
+        a.download = 'output.csv';
         document.body.appendChild(a)
         a.click();
         document.body.removeChild(a)
