@@ -74,3 +74,7 @@ button:active{
         font-size: 14px; /* Réduire la taille de la police sur mobile */
     }
 }
+
+h1 b{
+    color: green;
+}
