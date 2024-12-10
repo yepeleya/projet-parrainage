@@ -4,7 +4,6 @@ import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-
 const Index = () => {
     const [parrains, setParrains] = useState([]);
     const [filleuls, setFilleuls] = useState([]);
@@ -17,16 +16,13 @@ const Index = () => {
 
         // Si on est en novembre ou après, l'année scolaire est "année courante - année suivante"
         if (currentMonth >= 10) {
-            // Mois >= 10 signifie novembre ou après
             return `${currentYear}-${currentYear + 1}`;
         } else {
-            // Si on est avant novembre, l'année scolaire est "année précédente - année courante"
             return `${currentYear - 1}-${currentYear}`;
         }
     };
 
     const currentSchoolYear = getCurrentSchoolYear();
-    console.log(currentSchoolYear); // Affichera l'année scolaire actuelle
 
     const handleFileUpload = (event, setter) => {
         const file = event.target.files[0];
@@ -38,8 +34,11 @@ const Index = () => {
             const worksheet = workbook.Sheets[workbook.SheetNames[0]];
             const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-            // Ignorer la première ligne (A1)
-            const filteredData = jsonData.slice(1).flat();
+            // Ignorer la première ligne (A1) et mettre en majuscules
+            const filteredData = jsonData
+                .slice(1)
+                .flat()
+                .map((name) => name.toUpperCase());
             setter(filteredData);
         };
 
@@ -47,6 +46,7 @@ const Index = () => {
     };
 
     const shuffleArray = (array) => {
+        // Mélange aléatoire
         return array.sort(() => 0.5 - Math.random());
     };
 
@@ -66,9 +66,9 @@ const Index = () => {
         }
 
         // Tri des filleuls par ordre alphabétique
-        const sortedFilleuls = filleuls.sort((a, b) => a.localeCompare(b));
+        const sortedFilleuls = [...filleuls].sort((a, b) => a.localeCompare(b));
 
-        // Mélange des parrains pour une attribution aléatoire
+        // Mélange des parrains pour attribution aléatoire
         const shuffledParrains = shuffleArray([...parrains]);
 
         // Attribution des parrains aléatoirement
@@ -77,13 +77,13 @@ const Index = () => {
 
         sortedFilleuls.forEach((filleul, index) => {
             attribution.push([
-                index + 1,
-                filleul,
-                shuffledParrains[parrainIndex],
+                index + 1, // Numéro
+                filleul, // Nom Filleul
+                shuffledParrains[parrainIndex], // Nom Parrain
             ]);
             parrainIndex++;
             if (parrainIndex >= shuffledParrains.length) {
-                parrainIndex = 0;
+                parrainIndex = 0; // Reboucler si on atteint la fin
             }
         });
 
@@ -93,13 +93,13 @@ const Index = () => {
             `Attribution Parrains et Filleuls - ${currentSchoolYear} - ${filiere}`,
             20,
             10,
-        ); // Ajout de la filière dans le PDF
+        );
         doc.autoTable({
-            head: [["#", "Nom Filleul", "Nom Parrain"]],
+            head: [["N*", "Nom Filleul", "Nom Parrain"]], // Inversion des colonnes ici si nécessaire
             body: attribution,
         });
 
-        doc.save(`attribution_parrain_filleul_${filiere}.pdf`); // Utilisation de la filière dans le nom du fichier
+        doc.save(`attribution_parrain_filleul_${filiere}.pdf`);
     };
 
     return (
@@ -139,7 +139,7 @@ const Index = () => {
                         id="classe"
                         name="sellist1"
                         value={filiere}
-                        onChange={(e) => setFiliere(e.target.value)} // Mise à jour de la filière sélectionnée
+                        onChange={(e) => setFiliere(e.target.value)}
                         required
                     >
                         <option value="">Sélectionner une filière</option>
@@ -156,46 +156,6 @@ const Index = () => {
                         Générer le fichier PDF
                     </button>
                 </form>
-            </div>
-            <div className="toast show">
-                <div className="toast-header">
-                    <strong className="me-auto">Developpeur 1</strong>
-                    <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="toast"
-                    />
-                </div>
-                <div className="toast-body">
-                    <p>YEO YEPELEYA TENENA</p>
-                    <div className="social-icons">
-                        <a
-                            href="https://www.facebook.com/AEISTC"
-                            target="_blank" rel="noreferrer"
-                        >
-                            <i className="fa-brands fa-facebook-f" />
-                        </a>
-                        <a
-                            href="https://www.instagram.com/ae.istc"
-                            target="_blank" rel="noreferrer"
-                        >
-                            <i className="fa-brands fa-instagram" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div className="toast show">
-                <div className="toast-header">
-                    <strong className="me-auto">Developpeur 2</strong>
-                    <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="toast"
-                    />
-                </div>
-                <div className="toast-body">
-                    <p>Tiendrebeogo christoin aquilas</p>
-                </div>
             </div>
         </div>
     );
