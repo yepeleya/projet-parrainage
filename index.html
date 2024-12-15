@@ -1,57 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Parrainage ISTCPolytechnique</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-    <script src="https://kit.fontawesome.com/c367f8cf84.js" crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-    <script src="https:// cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/ 3.5.11/ jspdf.plugin.autotable.min.js"></script>
-   
-</head>
-<body> 
-    <div class="container"> <h1>Attribution Parrains et Filleuls <b>ISTC</b></h1> 
-    <form id="uploadForm"> 
-        <input type="file" id="fileParrains" accept=".csv" required>
-        <input type="file" id="fileFilleuls" accept=".csv" required>
-        <input type="text" id="numeroParrain" placeholder="Numéro du Parrain">
-        <button type="submit" id="generate">Générer</button>
-    </form>
-    <div id="result"></div>
-    <div id="parrainage-data"></div>
-    <select id="year-select">
-        <option value="2024-2025">2024-2025</option> 
-        <option value="2025-2026">2025-2026</option> 
-        <option value="2026-2027">2026-2027</option> 
-        <option value="2027-2028">2027-2028</option> 
-    </select>
-
-    <select  id="filiere-select">
-        <option value="EJ">EJ</option> 
-        <option value="ETTA">ETTA</option> 
-        <option value="EPA">EPA</option> 
-        <option value="EPM">EPM</option> 
-        <option value="EAIN">EAIN</option> 
-    </select>
-    <button id="generate-button">Générer PDF</button>
-    <footer>
-        <div class="footer-content"> 
-            <p>&copy; YEO YEPELEYA TENENA</p> 
-            <div class="social-icons"> 
-                <a href="https://www.facebook.com/AEISTC" target="_blank"> 
-                    <i class="fa-brands fa-facebook-f"></i> 
-                </a> 
-                <a href="https://www.instagram.com/ae.istc" target="_blank"> 
-                    <i class="fa-brands fa-instagram"></i> 
-                </a> 
-            </div> 
-        </div> 
-    </footer>
-
-    <script src="app.js"></script> 
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
