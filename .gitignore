@@ -1,84 +1,20 @@
 # ================================
-# GITIGNORE SÉCURISÉ - PROJET PARRAINAGE
+# GITIGNORE MINIMAL - TOUS FICHIERS INCLUS
 # ================================
 
-# === DEPENDENCIES ===
+# === DEPENDENCIES ONLY ===
 /node_modules
 /.pnp
 .pnp.js
-/vendor
-composer.lock
 
-# === BUILDS & PRODUCTION ===
+# === BUILD TEMPORAIRE ===
 /build
-/dist
-/out
-/.next
 
-# === ENVIRONNEMENT & CONFIG SENSIBLE ===
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.example
-config.local.*
-settings.json
-secrets.json
-
-# === BASE DE DONNÉES SENSIBLE ===
-*.sql
-*.bak
-*.dump
-database/
-db_backup/
-migrations/
-/uploads/*.xlsx
-/uploads/*.csv
-
-# === DONNÉES EXEMPLES ISTC ===
-LISTE-*.xlsx
-LISTE-*.csv
-*.xlsx
-*.csv
-
-# === FICHIERS TEMPORAIRES ===
-*.log
-*.cache
+# === SYSTEM TEMP ===
 .DS_Store
 Thumbs.db
-~$*
-*.tmp
-*.temp
 
-# === DÉVELOPPEMENT ===
-/coverage
-/.nyc_output
-/cypress/screenshots/
-/cypress/videos/
-
-# === IDE & ÉDITEURS ===
-.vscode/settings.json
-.idea/
-*.swp
-*.swo
-*~
-
-# === SYSTÈME ===
-*.pid
-*.seed
-*.pid.lock
-
-# === LOGS ===
+# === LOGS ONLY ===
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
-.npm
-.yarn-integrity
-
-# === SÉCURITÉ ===
-*.pem
-*.key
-*.cert
-*.crt
