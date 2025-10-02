@@ -25,6 +25,17 @@ const ParrainageApp = () => {
     const [historique, setHistorique] = useState([]);
     const [isMobile, setIsMobile] = useState(false);
 
+    // Fonction utilitaire pour nettoyer les caractères problématiques
+    const cleanText = useCallback((text) => {
+        if (!text) return '';
+        return text
+            .replace(/[ØßÜÊ¡²]/g, '') // Supprime les caractères problématiques spécifiques
+            .replace(/&¡/g, '') // Supprime la séquence &¡
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, '') // Supprime les accents
+            .trim();
+    }, []);
+
     // Hook pour détecter la taille d'écran
     useEffect(() => {
         const checkMobile = () => {
@@ -39,7 +50,7 @@ const ParrainageApp = () => {
 
     // Fonction pour générer l'email académique
     const generateAcademicEmail = useCallback((fullName, filiere) => {
-        const names = fullName.trim().split(' ').filter(name => name.length > 1);
+        const names = cleanText(fullName).trim().split(' ').filter(name => name.length > 1);
         if (names.length < 2) return null;
         
         const prenom = names[0].toLowerCase();
@@ -49,15 +60,26 @@ const ParrainageApp = () => {
         // Vérifier que le prénom et nom ont au moins 2 caractères
         if (prenom.length < 2 || nom.length < 2) return null;
         
-        // Nettoyer les caractères spéciaux
-        const cleanPrenom = prenom.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z]/g, "");
-        const cleanNom = nom.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z]/g, "");
+        // Nettoyer les caractères spéciaux et problématiques
+        const cleanPrenom = prenom
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "") // Supprime les accents
+            .replace(/[ØßÜÊ¡²]/g, "") // Supprime les caractères problématiques spécifiques
+            .replace(/[^a-z]/g, "") // Ne garde que les lettres minuscules
+            .toLowerCase();
+        
+        const cleanNom = nom
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "") // Supprime les accents
+            .replace(/[ØßÜÊ¡²]/g, "") // Supprime les caractères problématiques spécifiques
+            .replace(/[^a-z]/g, "") // Ne garde que les lettres minuscules
+            .toLowerCase();
         
         // Vérifier que les noms nettoyés ont encore une longueur suffisante
         if (cleanPrenom.length < 2 || cleanNom.length < 2) return null;
         
         return `${cleanPrenom}.${cleanNom}@edu.${filiereCode}.istc.ci`;
-    }, []);
+    }, [cleanText]);
 
     // Fonction pour traiter les fichiers Excel
     const handleFileUpload = useCallback((event, type) => {
@@ -108,7 +130,7 @@ const ParrainageApp = () => {
                         return !headers.includes(cellValue);
                     })
                     .map((row, index) => {
-                        const fullName = row[0].toString().trim();
+                        const fullName = cleanText(row[0].toString().trim());
                         const email = generateAcademicEmail(fullName, selectedFiliere);
                         
                         // Ne garder que les entrées avec un email valide (au moins 2 mots)
@@ -156,7 +178,7 @@ const ParrainageApp = () => {
         };
 
         reader.readAsArrayBuffer(file);
-    }, [selectedFiliere, generateAcademicEmail]);
+    }, [selectedFiliere, generateAcademicEmail, cleanText]);
 
     // Fonction de mélange aléatoire (Fisher-Yates shuffle)
     const shuffleArray = useCallback((array) => {
