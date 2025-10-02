@@ -1,23 +1,78 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ================================
+# GITIGNORE SÉCURISÉ - PROJET PARRAINAGE
+# ================================
 
-# dependencies
+# === DEPENDENCIES ===
 /node_modules
 /.pnp
 .pnp.js
+/vendor
+composer.lock
 
-# testing
-/coverage
-
-# production
+# === BUILDS & PRODUCTION ===
 /build
+/dist
+/out
+/.next
 
-# misc
-.DS_Store
+# === ENVIRONNEMENT & CONFIG SENSIBLE ===
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.example
+config.local.*
+settings.json
+secrets.json
 
+# === BASE DE DONNÉES SENSIBLE ===
+*.sql
+*.bak
+*.dump
+database/
+db_backup/
+migrations/
+/uploads/*.xlsx
+/uploads/*.csv
+
+# === FICHIERS TEMPORAIRES ===
+*.log
+*.cache
+.DS_Store
+Thumbs.db
+~$*
+*.tmp
+*.temp
+
+# === DÉVELOPPEMENT ===
+/coverage
+/.nyc_output
+/cypress/screenshots/
+/cypress/videos/
+
+# === IDE & ÉDITEURS ===
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# === SYSTÈME ===
+*.pid
+*.seed
+*.pid.lock
+
+# === LOGS ===
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+.npm
+.yarn-integrity
+
+# === SÉCURITÉ ===
+*.pem
+*.key
+*.cert
+*.crt
