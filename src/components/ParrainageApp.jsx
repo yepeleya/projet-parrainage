@@ -277,9 +277,14 @@ const ParrainageApp = () => {
             });
 
             // EN-TÊTE PROFESSIONNEL
-            doc.setFontSize(22);
+            doc.setFontSize(16);
             doc.setFont('helvetica', 'bold');
-            doc.text('INSTITUT SUPÉRIEUR DE TECHNOLOGIE ET DE COMMUNICATION', 20, 25);
+            // Titre centré et adapté à la largeur
+            const title = 'INSTITUT DES SCIENCES ET TECHNIQUES DE LA COMMUNICATION';
+            const pageWidth = doc.internal.pageSize.width;
+            const titleWidth = doc.getTextWidth(title);
+            const titleX = (pageWidth - titleWidth) / 2;
+            doc.text(title, titleX, 25);
             
             // Ligne de séparation
             doc.setLineWidth(0.5);
