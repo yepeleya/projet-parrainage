@@ -36,6 +36,12 @@ migrations/
 /uploads/*.xlsx
 /uploads/*.csv
 
+# === DONNÉES EXEMPLES ISTC ===
+LISTE-*.xlsx
+LISTE-*.csv
+*.xlsx
+*.csv
+
 # === FICHIERS TEMPORAIRES ===
 *.log
 *.cache
